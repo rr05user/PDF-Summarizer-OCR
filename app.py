@@ -2,8 +2,12 @@ from flask import Flask, render_template, request
 import os
 from extractor import extract_text_from_pdf
 from summarizer import summarize_text
+from dotenv import load_dotenv
+load_dotenv(override=True)   # ensure .env is applied even if shell lacks exports
+
 
 app = Flask(__name__)
+print("GOOGLE_APPLICATION_CREDENTIALS =", os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 

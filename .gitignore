@@ -1,7 +1,21 @@
-google_credentials.json
+# Python
 venv/
 __pycache__/
 *.pyc
-.env
-.DS_Store
 
+# Local data
+uploads/
+_data/
+receipts.db
+
+# Node
+node_modules/
+receipt-ui/node_modules/
+dist/
+
+# Env/secrets
+.env
+keys/*.json
+
+# Git
+.gitignore
