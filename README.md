@@ -7,85 +7,93 @@ Full-stack receipt/PDF summarizer: upload a PDF → OCR extracts text (Google Vi
 ---
 
 ## Demo Features
-- ✅ PDF upload
-- ✅ OCR extraction (Google Cloud Vision + pdf2image)
-- ✅ LLM summarization (Transformers / LLaMA pipeline)
-- ✅ REST API (Flask)
-- ✅ SQLite persistence (`receipts.db`)
-- ✅ React + Vite + Tailwind UI (upload + list + detail views)
-- ✅ CORS enabled for local dev
 
+- ✅ PDF upload  
+- ✅ OCR extraction (Google Cloud Vision + pdf2image)  
+- ✅ LLM summarization (Transformers / LLaMA pipeline)  
+- ✅ REST API (Flask)  
+- ✅ SQLite persistence (`receipts.db`)  
+- ✅ React + Vite + Tailwind UI (upload + list + detail views)  
+- ✅ CORS enabled for local dev  
 
-Project Background:
+---
 
-Backend (Root)
-•	app_api.py
-Main Flask REST API. Handles routes like /api/receipts, runs OCR + summarization, and saves results into SQLite via SQLAlchemy.
+## 📂 Project Background
 
-•	app.py
-Legacy/older Flask entrypoint used for server-rendered HTML (templates/). If you're using React now, this is mostly kept for reference.
+### Backend (root)
 
-•	extractor.py
-OCR pipeline. Converts PDFs into images (pdf2image) and extracts text using Google Cloud Vision.
+- **app_api.py**  
+  Main Flask REST API. Handles routes like `/api/receipts`, runs OCR + summarization, and saves results into SQLite via SQLAlchemy.
 
-•	summarizer.py
-LLM summarization pipeline. Takes OCR text and produces a concise summary using Hugging Face Transformers (LLaMA-based model).
+- **app.py**  
+  Legacy Flask entrypoint for server-rendered HTML (`templates/`). Mostly kept for reference if you are using the React UI.
 
-•	models.py
-SQLAlchemy models + DB initialization. Defines the Receipt table schema (filename, merchant, totals, text, summary, tags, timestamps, etc.).
+- **extractor.py**  
+  OCR pipeline. Converts PDFs into images (pdf2image) and extracts text using Google Cloud Vision.
 
-•	requirements.txt
-Python dependencies for backend (Flask, google vision client libs, pdf2image, transformers, torch, SQLAlchemy, etc.).
+- **summarizer.py**  
+  LLM summarization pipeline. Takes OCR text and produces a concise summary using Hugging Face Transformers (LLaMA-based model).
 
-•	start.sh
-Convenience start script (typically used for deployment/docker).
+- **models.py**  
+  SQLAlchemy models and DB initialization. Defines the `Receipt` table schema (filename, merchant, totals, text, summary, tags, timestamps, etc.).
 
-•	.gitignore
-Prevents committing venv/, __pycache__/, uploads/, DB files, credentials, etc.
+- **requirements.txt**  
+  Python dependencies for the backend (Flask, Google Vision client libs, pdf2image, transformers, torch, SQLAlchemy, etc.).
 
-•	uploads/
-Where uploaded PDFs are stored locally during dev. Should stay ignored in git.
-•	templates/
+- **start.sh**  
+  Convenience start script (often used for deployment/Docker).
 
-Flask template UI (HTML form). Not needed once React UI is used.
-Frontend (receipt-ui/)
+- **.gitignore**  
+  Prevents committing `venv/`, `__pycache__/`, `uploads/`, DB files, credentials, etc.
 
-•	receipt-ui/
-React + Vite + Tailwind frontend.
+- **uploads/**  
+  Directory where uploaded PDFs are stored locally during development. Should remain ignored in git.
 
-Key files:
-•	receipt-ui/src/App.jsx
+- **templates/**  
+  Flask template UI (HTML form). Not needed once the React UI is used.
 
-Main UI layout (status, upload, list, detail views).
-•	receipt-ui/src/components/Upload.jsx
+---
 
-Upload form that POSTs PDFs to /api/receipts.
-•	receipt-ui/src/components/ReceiptsList.jsx
+### Frontend (`receipt-ui/`)
 
-Fetches and displays receipts from GET /api/receipts.
-•	receipt-ui/src/components/ReceiptDetail.jsx (if present)
+- **receipt-ui/**  
+  React + Vite + Tailwind frontend.
 
-Shows a selected receipt’s summary/raw text/metadata via GET /api/receipts/:id.
-•	receipt-ui/src/index.css
+**Key files:**
 
-Tailwind entry (Tailwind v4 import style).
-•	receipt-ui/postcss.config.js
+- **receipt-ui/src/App.jsx**  
+  Main UI layout (status, upload, list, detail views).
 
-PostCSS config enabling Tailwind.
-•	receipt-ui/tailwind.config.js
+- **receipt-ui/src/components/Upload.jsx**  
+  Upload form that POSTs PDFs to `/api/receipts`.
 
-Tailwind config (content paths/theme).
-•	receipt-ui/vite.config.js
-Vite configuration.
+- **receipt-ui/src/components/ReceiptsList.jsx**  
+  Fetches and displays receipts from `GET /api/receipts`.
 
-•	receipt-ui/package.json
-Frontend dependencies and scripts (dev, build).
+- **receipt-ui/src/components/ReceiptDetail.jsx** (if present)  
+  Shows a selected receipt’s summary, raw text, and metadata via `GET /api/receipts/:id`.
 
+- **receipt-ui/src/index.css**  
+  Tailwind entry (Tailwind v4 import style).
 
+- **receipt-ui/postcss.config.js**  
+  PostCSS configuration enabling Tailwind.
 
-## Quick Start (Local Dev)
+- **receipt-ui/tailwind.config.js**  
+  Tailwind configuration (content paths and theme).
+
+- **receipt-ui/vite.config.js**  
+  Vite configuration.
+
+- **receipt-ui/package.json**  
+  Frontend dependencies and scripts (`dev`, `build`, etc.).
+
+---
+
+## 🚀 Quick Start (Local Dev)
 
 ### 1) Backend (Flask API)
+
 ```bash
 cd ~/receipt-summarizer
 python -m venv venv
